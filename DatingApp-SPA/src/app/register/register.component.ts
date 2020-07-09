@@ -4,30 +4,30 @@ import { AuthService } from '../_Services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  @Output() cancelRegister = new EventEmitter();
 
-  @Output() cancelRegister = new EventEmitter() ;
+  model: any = {};
 
-  model: any = {  } ;
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   register() {
-    this.authService.register(this.model).subscribe(() => {
-      console.log('Registration succesfull');
-  },
-    error => {console.log(error);
-    }) ;
+      this.authService.register(this.model).subscribe(
+      () => {
+        console.log('Registration succesfull');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   cancel() {
-    this.cancelRegister.emit(false) ;
-    console.log('Cancelled') ;
+    this.cancelRegister.emit(false);
+    console.log('Cancelled');
   }
-
 }
